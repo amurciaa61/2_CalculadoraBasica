@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace _2_CalculadoraBasica
 {
@@ -23,6 +12,67 @@ namespace _2_CalculadoraBasica
         public MainWindow()
         {
             InitializeComponent();
+            calcularButton.IsEnabled = false;
+        }
+
+        private void calcularButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                double operando1 = double.Parse(operando1TextBox.Text);
+                double operando2 = double.Parse(operando2TextBox.Text);
+                string operador = operadorTextBox.Text;
+                double resultado;
+                switch (operador)
+                {
+                    case "+":
+                        resultado = operando1 + operando2;
+                        break;
+                    case "-":
+                        resultado = operando1 - operando2;
+                        break;
+                    case "*":
+                        resultado = operando1 * operando2;
+                        break;
+                    case "/":
+                        resultado = operando1 / operando2;
+                        break;
+                    default:
+                        resultado = double.MinValue;
+                        break;
+                }
+                if (resultado == double.MinValue)
+                {
+                    resultadoTextBox.Text = "";
+                    MessageBox.Show("Operadores permitidos: + - * /");
+                }   
+                else
+                    resultadoTextBox.Text = $"{resultado:F2}";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Se ha producido un error.\nCausa: "+ ex.Message +"\nRecomendación: Revise los operandos.");
+            }
+
+        }
+
+        private void limpiarButton_Click(object sender, RoutedEventArgs e)
+        {
+            operando1TextBox.Text = "";
+            operando2TextBox.Text = "";
+            operadorTextBox.Text = "";
+            resultadoTextBox.Text = "";
+        }
+
+        private void operadorTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (operadorTextBox.Text == "+" ||
+                operadorTextBox.Text == "-" ||
+                operadorTextBox.Text == "*" ||
+                operadorTextBox.Text == "/")
+                calcularButton.IsEnabled = true;
+            else
+                calcularButton.IsEnabled = false;
         }
     }
 }
