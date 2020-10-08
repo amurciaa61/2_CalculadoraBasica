@@ -12,7 +12,7 @@ namespace _2_CalculadoraBasica
         public MainWindow()
         {
             InitializeComponent();
-            calcularButton.IsEnabled = false; 
+            calcularButton.IsEnabled = false;
         }
 
         private void calcularButton_Click(object sender, RoutedEventArgs e)
